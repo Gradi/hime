@@ -22,9 +22,11 @@ main = do
     exitCode <- runProcess $ proc command args
     diffTime <- getTime Monotonic >>= (return . diffTimeSpec startTime)
 
-    putErrStrLn $ "\n\r" ++
-               "Exit code....: " ++ show (exitCodeToInt exitCode) ++ "\n\r" ++
-               "Total time...: " ++ timeSpecToHumanString diffTime
+    putErrStrLn $ unlines [ "", "",
+               "Exit code..........: " ++ show (exitCodeToInt exitCode),
+               "Total time (ms) ...: " ++ show (asMilliseconds diffTime),
+               "Total time.........: " ++ timeSpecToHumanString diffTime
+               ]
 
 readArguments :: IO (Command, Arguments)
 readArguments = do
